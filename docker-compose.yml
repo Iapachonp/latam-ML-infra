@@ -2,10 +2,14 @@ services:
   app:
     build:
       context: .
+      args:
+        arg_model_version: 0.0.1 # set Model version to test
     container_name: latam-app
     environment:
       PORT: 8000
       env: local
+    volumes: 
+      - ./Model/:/Model/
     ports:
       - '8000:8000'
     restart: "no"

@@ -19,8 +19,8 @@ class Flight(BaseModel):
     Emp_l: str
 
     def predict(self):
-        model_version= os.getenv("modelVersion")
-        with open( f"../Latam_flight_model:{model_version}.pkl", "rb" ) as modelfile :
+        model_version = os.getenv("model_version")
+        with open(f"../Latam_flight_model.{model_version}.pkl", "rb") as modelfile:
             model = pickle.load(modelfile)
             return {"Prediction": model.predict()}
 

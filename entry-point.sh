@@ -1,19 +1,22 @@
+#!/bin/sh
 
-
-function getModel (){
+getModel(){
   set -e
-  model_version= `cat version.txt` 
-  if test[$env == "local"] ; then 
-    cp /Model/Latam_flight_model:$model_version.pkl ./src/
+  model_version=`cat version.txt`
+  if [ "$env"=="local" ] ; then 
+    cp "/Model/Latam_flight_model.${model_version}.pkl" ./app/
   else
-    gsutil cp gs://ML-model-bucket/Latam_flight_model:$model_version.pkl ./src/
-  fi 
+    gsutil cp "gs://ML-model-bucket/Latam_flight_model.${model_version}.pkl" ./app/
+  fi
 }
 
 # MAIN code 
 
 # Sets and gets the model version to serve 
-getModel()
+getModel
+export model_version=`cat version.txt`
+echo "${model_version}"
 # Start service at port 8000
 cd app/src/
+ls
 uvicorn main:app --host 0.0.0.0 --port $PORT

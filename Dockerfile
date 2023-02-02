@@ -7,4 +7,6 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 COPY ./src/ /app/src/
 COPY ./entry-point.sh .
 COPY ./version.txt .
-CMD '/entry-point.sh'
+ARG arg_model_version
+ENV model_version $arg_model_version
+ENTRYPOINT ["/entry-point.sh"]

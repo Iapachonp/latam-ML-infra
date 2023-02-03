@@ -115,7 +115,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
       - name: Use gcloud CLI
-        run: gsutil cp "gs://ml-latam-3F89841D-5689-4FFC-ABED-807239371CA6/Latam_flight_model.${ML_version}.pkl" .
+        run: gsutil cp "gs://ml-latam-3f89841d-5689-4ffc-abed-807239371ca6/Latam_flight_model.${ML_version}.pkl" .
       - name: Archive model 
         uses: actions/upload-artifact@v3
         with:

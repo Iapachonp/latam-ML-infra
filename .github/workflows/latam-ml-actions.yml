@@ -20,22 +20,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
-      - run: cd ./terraform/
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
         continue-on-error: true
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: terraform init -chdir=./terraform/
 
       - name: Terraform Validate
         id: validate
-        run: terraform validate -no-color
+        run: terraform validate -no-color -chdir=./terraform/
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color
+        run: terraform plan -no-color -chdir=./terraform/
         continue-on-error: true
 
       - uses: actions/github-script@v6

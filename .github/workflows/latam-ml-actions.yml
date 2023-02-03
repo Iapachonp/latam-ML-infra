@@ -21,4 +21,7 @@ jobs:
         with:
           path: main
       - name: checks cicd
-        run: ls -a 
+        run: |
+          cd main 
+          ls -a 
+        shell: bash

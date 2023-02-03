@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
-
+      - run: cd ./terraform/
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
@@ -90,7 +90,7 @@ jobs:
         run: echo $ML_version
   
   get-ML-model:
-    needs: get-version
+    needs: [get-version, infra]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -117,7 +117,7 @@ jobs:
           path: ./Latam_flight_model.${ML_version}.pkl
 
   build-image:
-    needs: get-ML-model
+    needs: [get-ML-model, infra] 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

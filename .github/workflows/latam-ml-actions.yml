@@ -27,6 +27,7 @@ jobs:
       - name: test version
         run: echo $ML_version
   build:
+    needs: get-version
     runs-on: ubuntu-latest
     steps:
       - name: version to deploy

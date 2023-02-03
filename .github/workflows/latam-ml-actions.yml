@@ -111,10 +111,10 @@ jobs:
       - name: Use gcloud CLI
         run: gsutil cp "gs://ml-latam-3F89841D-5689-4FFC-ABED-807239371CA6/Latam_flight_model.${ML_version}.pkl" .
       - name: Archive model 
-          uses: actions/upload-artifact@v3
-          with:
-            name: latam-ml-model
-            path: ./Latam_flight_model.${ML_version}.pkl
+        uses: actions/upload-artifact@v3
+        with:
+          name: latam-ml-model
+          path: ./Latam_flight_model.${ML_version}.pkl
 
   build-image:
     needs: get-ML-model

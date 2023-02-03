@@ -18,13 +18,15 @@ jobs:
   infra:
     runs-on: ubuntu-latest
     env:
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      GOOGLE_APPLICATION_CREDENTIALS: /sa.json  
+      sa-cred: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} 
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
-      - name: cd ./terraform && Terraform fmt
+      - run: echo $sa-cred >> /sa.json
+      - name: Terraform fmt
         id: fmt
-        run: terraform fmt -check
+        run: cd ./terraform && terraform fmt -check
         continue-on-error: true
       - name: Terraform Init
         id: init

@@ -51,9 +51,9 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./main/
           push: true
-          tags: Latam_ML_API:production  
+          tags: latam_ml_api:production  
           build-args: |
             arg_model_version=$ML_version
 

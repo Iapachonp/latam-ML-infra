@@ -17,6 +17,8 @@ jobs:
 
   infra:
     runs-on: ubuntu-latest
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2

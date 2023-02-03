@@ -54,7 +54,7 @@ jobs:
         with:
           context: ./main/
           push: true
-          tags: latam_ml_api:production  
+          tags: iapachonp/latam:production  
           build-args: |
             arg_model_version=$ML_version
 

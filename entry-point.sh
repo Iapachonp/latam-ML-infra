@@ -6,7 +6,7 @@ getModel(){
   if [ "$env"=="local" ] ; then 
     cp "/Model/Latam_flight_model.${model_version}.pkl" ./app/
   else
-    gsutil cp "gs://ML-model-bucket/Latam_flight_model.${model_version}.pkl" ./app/
+    cp "/Latam_flight_model.${model_version}.pkl" ./app/
   fi
 }
 

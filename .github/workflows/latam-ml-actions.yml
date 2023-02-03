@@ -14,6 +14,68 @@ on:
   pull_request:
 
 jobs:
+
+  infra:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
+
+      - uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            <details><summary>Validation Output</summary>
+
+            \`\`\`\n
+            ${{ steps.validate.outputs.stdout }}
+            \`\`\`
+
+            </details>
+
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+
   get-version:
     runs-on: ubuntu-latest
     steps:
@@ -26,8 +88,36 @@ jobs:
          echo "ML_version=$(echo `cat main/version.txt`)" >> $GITHUB_ENV
       - name: test version
         run: echo $ML_version
-  build:
+  
+  get-ML-model:
     needs: get-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: main
+      - name: checks version
+        run: |
+         echo "ML_version=$(echo `cat main/version.txt`)" >> $GITHUB_ENV
+      - name: get model file
+        run: echo $ML_version
+      - id: auth
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+    - name: Use gcloud CLI
+      run: gsutil cp "gs://ml-latam-3F89841D-5689-4FFC-ABED-807239371CA6/Latam_flight_model.${ML_version}.pkl" .
+    - name: Archive model 
+        uses: actions/upload-artifact@v3
+        with:
+          name: latam-ml-model
+          path: ./Latam_flight_model.${ML_version}.pkl
+
+  build-image:
+    needs: get-ML-model
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -54,7 +144,7 @@ jobs:
         with:
           context: ./main/
           push: true
-          tags: iapachonp/latam:production  
+          tags: iapachonp/latam-ml-api:production  
           build-args: |
             arg_model_version=$ML_version
 

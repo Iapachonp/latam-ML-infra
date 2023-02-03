@@ -9,6 +9,14 @@ from fastapi.exception_handlers import (
 import pickle
 import os
 
+# model dependencies imports
+import pandas as pd
+import numpy as np
+import time
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, classification_report
+
 security = HTTPBasic()
 
 
@@ -18,11 +26,26 @@ class Flight(BaseModel):
     Des_l: str
     Emp_l: str
 
+    def _flight_to_df(self):
+        return pd.read_csv(
+            "/docs/SRE-challenge/datasets/x_test.csv",
+            nrows=1,
+            skiprows=int(self.Vlo_l),
+            header=None,
+        ).to_numpy()
+
     def predict(self):
         model_version = os.getenv("model_version")
         with open(f"../Latam_flight_model.{model_version}.pkl", "rb") as modelfile:
             model = pickle.load(modelfile)
-            return {"Prediction": model.predict()}
+            try:
+                return {
+                    "Prediction": "Low delayed probability"
+                    if int(model.predict(self._flight_to_df())) > 0
+                    else "High delayed probability"
+                }
+            except Exception as e:
+                return {"error": str(e)}
 
 
 app = FastAPI(

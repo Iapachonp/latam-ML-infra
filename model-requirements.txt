@@ -1,0 +1,17 @@
+attrs
+cattrs
+certifi
+constructs
+importlib-resources
+jsii
+publication
+python-dateutil
+six
+typing-extensions
+wincertstore
+zipp
+pandas
+xgboost
+sklearn
+# pickle5 no need for pickle5 in python versions greater than 3.8
+scikit-learn==1.2.1 # needed to run the model

@@ -156,7 +156,7 @@ jobs:
           push: true
           tags: iapachonp/latam-ml-api:production  
           build-args: |
-            arg_model_version=$ML_version
+            arg_model_version=${{ env.ML_version }}
 
 
 

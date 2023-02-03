@@ -25,3 +25,9 @@ jobs:
           cd main 
           ls -a 
         shell: bash
+      - name: checks version
+        run: |
+         echo "ML_version=$(echo `cat main/version.txt`)" >> $GITHUB_ENV
+      - name: test version
+        run: echo $ML_version
+

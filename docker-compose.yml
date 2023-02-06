@@ -2,8 +2,9 @@ services:
   app:
     build:
       context: .
+      target: local 
       args:
-        arg_model_version: 0.0.2 # set Model version to test
+        arg_model_version: 0.0.3 # set Model version to test
     container_name: latam-app
     environment:
       PORT: 8000

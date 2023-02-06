@@ -8,6 +8,9 @@ from fastapi.exception_handlers import (
 )
 import pickle
 import os
+from logging.config import dictConfig
+import logging
+from config import LogConfig
 
 # model dependencies imports
 import pandas as pd
@@ -19,11 +22,16 @@ from sklearn.metrics import confusion_matrix, classification_report
 
 security = HTTPBasic()
 
+# set up logger
+dictConfig(LogConfig().dict())
+logger = logging.getLogger("latam-ml-service")
+
+
 def model_deserializer(model):
     try: 
         return(pickle.load(model))
     except Exception as e:
-        print(f"Invalid Model: {e}") 
+        logger.error(f"Invalid Model: {e}") 
         raise 
         
 
@@ -52,6 +60,7 @@ class Flight(BaseModel):
                     else "High delayed probability"
                 }
             except Exception as e:
+                logger.error(f"Invalid Prediction {e}")
                 return {"error": str(e)}
 
 
@@ -63,13 +72,8 @@ app = FastAPI(
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    print(f"OMG! The client sent invalid data!: {exc}")
+    logger.warning(f"The client sent invalid data!: {exc}")
     return await request_validation_exception_handler(request, exc)
-    # return JSONResponse(
-    #   status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-    #  content=jsonable_encoder({"detail": exc.errors(), "body": exc.body}),
-    # )
-
 
 @app.get("/users/me")
 def read_current_user(credentials: HTTPBasicCredentials = Depends(security)):

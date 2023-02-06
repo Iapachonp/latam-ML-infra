@@ -1,5 +1,5 @@
 ARG version=3.9.16-slim
-FROM python:${version}
+FROM python:${version} AS base
 
 # Model source code and dependencies build
 RUN mkdir -p /app/src
@@ -16,7 +16,11 @@ ENV model_version $arg_model_version
 # Copy Micro-service scripts and needed docs
 COPY ./entry-point.sh .
 COPY ./version.txt .
-COPY ./Latam_flight_model.$arg_model_version.pkl . 
 
+FROM base AS local
+ENTRYPOINT ["/entry-point.sh"]
+
+FROM base AS prod-final
+COPY ./Latam_flight_model.$arg_model_version.pkl . 
 # micro service entry point 
 ENTRYPOINT ["/entry-point.sh"]

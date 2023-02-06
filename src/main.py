@@ -19,6 +19,13 @@ from sklearn.metrics import confusion_matrix, classification_report
 
 security = HTTPBasic()
 
+def model_deserializer(model):
+    try: 
+        return(pickle.load(model))
+    except Exception as e:
+        print(f"Invalid Model: {e}") 
+        raise 
+        
 
 class Flight(BaseModel):
     Vlo_l: str
@@ -37,7 +44,7 @@ class Flight(BaseModel):
     def predict(self):
         model_version = os.getenv("model_version")
         with open(f"../Latam_flight_model.{model_version}.pkl", "rb") as modelfile:
-            model = pickle.load(modelfile)
+            model = model_deserializer(modelfile)
             try:
                 return {
                     "Prediction": "Low delayed probability"

@@ -26,6 +26,7 @@ jobs:
         run: |
           echo "test_image_version=$(echo `cat main/tests/test-image/version.txt`)" >> $GITHUB_ENV
           echo "version to deploy $test_image_version"
+          cp /main/requirements.txt /main/tests/test-image/
       - name: docker-setup
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx

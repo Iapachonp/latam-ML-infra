@@ -60,7 +60,7 @@ jobs:
           ./main/scripts/test.sh 
       - name: validate
         run: |
-          ./main.scripts/validate.sh 
+          ./main/scripts/validate.sh 
   infra:
     runs-on: ubuntu-latest
     env:

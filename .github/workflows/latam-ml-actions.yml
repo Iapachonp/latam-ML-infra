@@ -56,7 +56,7 @@ jobs:
           path: main 
       - name: test
         run: |
-          ./scripts/test.sh 
+          ./main/scripts/test.sh 
 
   infra:
     runs-on: ubuntu-latest

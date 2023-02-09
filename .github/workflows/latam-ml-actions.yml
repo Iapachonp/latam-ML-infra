@@ -54,11 +54,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          path: main 
+          path: main
       - name: test
         run: |
           ./main/scripts/test.sh 
-
+      - name: validate
+        run: |
+          ./main.scripts/validate.sh 
   infra:
     runs-on: ubuntu-latest
     env:

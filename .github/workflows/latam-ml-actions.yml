@@ -49,13 +49,14 @@ jobs:
     runs-on: ubuntu-latest
     container: iapachonp/latam-ml-test-and-validations:production
     needs: [build-test-and-validations-image]
-    - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          path: main 
-    - name: test
-        run: |
-          ./scripts/test.sh 
+    steps:
+      - name: Checkout
+          uses: actions/checkout@v3
+          with:
+            path: main 
+      - name: test
+          run: |
+            ./scripts/test.sh 
 
   infra:
     runs-on: ubuntu-latest

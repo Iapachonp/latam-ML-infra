@@ -40,7 +40,6 @@ jobs:
         with:
           context: ./main/tests/test-image
           push: true
-          target: prod-final 
           tags: | 
             iapachonp/latam-ml-test-and-validations:production  
             iapachonp/latam-ml-test-and-validations:${{ env.test_image_version }}

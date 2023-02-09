@@ -1,7 +1,7 @@
 ARG version=3.9.16-slim
 FROM python:${version}
 
-RUN mkdir /lib  
+RUN mkdir /lib-test  
 COPY ./test-requirements.txt /lib
 COPY ./requirements.txt /lib
 

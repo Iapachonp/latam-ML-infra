@@ -155,9 +155,9 @@ jobs:
           context: ./main/
           push: true
           target: prod-final 
-          tags: 
-            - iapachonp/latam-ml-api:production  
-            - iapachonp/latam-ml-api:${{ env.ML_version }}
+          tags: | 
+            iapachonp/latam-ml-api:production  
+            iapachonp/latam-ml-api:${{ env.ML_version }}
           build-args: |
             arg_model_version=${{ env.ML_version }}
 

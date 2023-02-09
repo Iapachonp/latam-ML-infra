@@ -10,7 +10,7 @@ import pickle
 import os
 from logging.config import dictConfig
 import logging
-from config import LogConfig
+from .config import LogConfig
 
 # model dependencies imports
 import pandas as pd

@@ -166,7 +166,7 @@ jobs:
           path: /tmp/Latam_flight_model.${{ env.ML_version }}.pkl
 
   build-image:
-    needs: [get-ML-model, infra] 
+    needs: [get-ML-model, infra, test-and-validate] 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

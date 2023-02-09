@@ -28,12 +28,12 @@ logger = logging.getLogger("latam-ml-service")
 
 
 def model_deserializer(model):
-    try: 
-        return(pickle.load(model))
+    try:
+        return pickle.load(model)
     except Exception as e:
-        logger.error(f"Invalid Model: {e}") 
-        raise 
-        
+        logger.error(f"Invalid Model: {e}")
+        raise
+
 
 class Flight(BaseModel):
     Vlo_l: str
@@ -74,6 +74,7 @@ app = FastAPI(
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     logger.warning(f"The client sent invalid data!: {exc}")
     return await request_validation_exception_handler(request, exc)
+
 
 @app.get("/users/me")
 def read_current_user(credentials: HTTPBasicCredentials = Depends(security)):

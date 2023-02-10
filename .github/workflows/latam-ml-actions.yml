@@ -194,7 +194,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: us-central1-docker.pkg.dev
-          username: github-sa  
+          username: _json_key  
           password: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       - name: Build and push
         uses: docker/build-push-action@v4

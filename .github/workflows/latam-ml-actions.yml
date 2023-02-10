@@ -77,11 +77,9 @@ jobs:
       - name: Terraform Init
         id: init
         run: cd ./terraform && terraform init 
-
       - name: Terraform Validate
         id: validate
         run: cd ./terraform && terraform validate -no-color 
-
       - name: Terraform Plan
         id: plan
         run: cd ./terraform && terraform plan -no-color 

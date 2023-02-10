@@ -21,7 +21,6 @@ FROM base AS local
 ENTRYPOINT ["/entry-point.sh"]
 
 FROM base AS prod-final
-ENV PORT 8000
 COPY ./Latam_flight_model.$arg_model_version.pkl . 
 # micro service entry point 
 ENTRYPOINT ["/entry-point.sh"]

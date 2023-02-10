@@ -2,7 +2,7 @@ from main import model_deserializer
 
 
 def test_model_deserializer():
-    with open(f"./others/dummy_model.pkl", "rb") as dummy_model:
+    with open(f"./tests/others/dummy_model.pkl", "rb") as dummy_model:
         try:
             model_deserializer(dummy_model)
         except Exception as e:

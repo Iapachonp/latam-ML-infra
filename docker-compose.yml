@@ -7,7 +7,7 @@ services:
         arg_model_version: 0.0.3 # set Model version to test
     container_name: latam-app
     environment:
-      PORTT: 8000
+      PORT: 8000
       env: local
     volumes: 
       - ./Model/:/Model/

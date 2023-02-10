@@ -5,7 +5,7 @@ resource "google_cloud_run_service" "Latam_ML_service" {
   template {
     spec {
       containers {
-        image = "us-docker.pkg.dev/iapachonp/latam-ml-api"
+        image = "us-central1-docker.pkg.dev/aa-study/latam-repo/latam-ml-api:production"
       }
     }
   }

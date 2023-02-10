@@ -23,4 +23,4 @@ ENTRYPOINT ["/entry-point.sh"]
 FROM base AS prod-final
 COPY ./Latam_flight_model.$arg_model_version.pkl . 
 # micro service entry point 
-ENTRYPOINT ["/entry-point.sh"]
+CMD ["/entry-point.sh"]

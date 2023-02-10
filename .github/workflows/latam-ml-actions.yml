@@ -40,7 +40,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: ./main/tests/test-image
+          context: ./main/src/tests/test-image
           push: true
           tags: | 
             iapachonp/latam-ml-test-and-validations:production  

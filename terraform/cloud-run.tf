@@ -6,7 +6,7 @@ resource "google_cloud_run_service" "Latam_ML_service" {
     spec {
       containers {
         image = "us-central1-docker.pkg.dev/aa-study/latam-repo/latam-ml-api:production"
-        ports = { containerPort : 8080 }
+        ports = { containerPort = 8080 }
       }
     }
   }

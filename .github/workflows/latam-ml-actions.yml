@@ -203,8 +203,8 @@ jobs:
           push: true
           target: prod-final 
           tags: | 
-            aa-study/latam-repo/latam-ml-api:production  
-            aa-study/latam-repo/latam-ml-api:${{ env.ML_version }}
+            us-central1-docker.pkg.dev/aa-study/latam-repo/latam-ml-api:production  
+            us-central1-docker.pkg.dev/aa-study/latam-repo/latam-ml-api:${{ env.ML_version }}
           build-args: |
             arg_model_version=${{ env.ML_version }}
 

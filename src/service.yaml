@@ -7,6 +7,6 @@ spec:
     spec:
       containers:
       - image: us-central1-docker.pkg.dev/aa-study/latam-repo/latam-ml-api:production
-      ports:
+        ports:
         - name: h2c
           containerPort: 8000 

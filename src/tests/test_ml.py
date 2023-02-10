@@ -1,4 +1,4 @@
-from ..main import model_deserializer
+from main import model_deserializer
 
 
 def test_model_deserializer():

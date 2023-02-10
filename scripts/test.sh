@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd ./main/src/tests
+cd ./main/src/
 echo "Testing micro service"
 python -m pytest -rP

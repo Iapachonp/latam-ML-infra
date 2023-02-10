@@ -265,7 +265,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
       - name: Use gcloud CLI
-        run: gcloud run services replace ./main/src/service.yaml
+        run: gcloud run services replace ./main/src/service.yaml --region us-central1
    
 
 

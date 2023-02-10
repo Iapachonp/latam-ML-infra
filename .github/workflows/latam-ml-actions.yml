@@ -24,7 +24,7 @@ jobs:
           path: main
       - name: checks version
         run: |
-          echo "test_image_version=$(echo `cat main/tests/test-image/version.txt`)" >> $GITHUB_ENV
+          echo "test_image_version=$(echo `cat main/src/tests/test-image/version.txt`)" >> $GITHUB_ENV
           echo "version to deploy $test_image_version"
           cp main/requirements.txt main/src/tests/test-image/
           cp main/model-requirements.txt main/src/tests/test-image/

@@ -1,0 +1,12 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: latam-ml-service 
+spec:
+  template:
+    spec:
+      containers:
+      - image: us-central1-docker.pkg.dev/aa-study/latam-repo/latam-ml-api:production
+      ports:
+        - name: h2c
+          containerPort: 8000 

@@ -245,8 +245,28 @@ jobs:
           build-args: |
             arg_model_version=${{ env.ML_version }}
 
-
-
+  deploy-CR:
+    needs: [build-image, build-image-GCP]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: main
+      - name: checks version
+        run: |
+         echo "ML_version=$(echo `cat main/version.txt`)" >> $GITHUB_ENV
+      - name: get model file
+        run: echo $ML_version
+      - id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+      - name: Use gcloud CLI
+        run: gcloud run services replace ./main/src/service.yaml
+   
 
 
 

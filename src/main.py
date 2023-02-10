@@ -10,12 +10,13 @@ import pickle
 import os
 from logging.config import dictConfig
 import logging
-from .config import LogConfig
+from conf.config import LogConfig
 
 # model dependencies imports
 import pandas as pd
 import numpy as np
 import time
+import uvicorn
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, classification_report
@@ -97,3 +98,7 @@ async def create_flight(flight: Flight):
 @app.post("/predict-flight")
 async def predict_flight(flight: Flight):
     return flight.predict()
+
+
+if __name__ == "__main__":
+    uvicorn.run(app , host="0.0.0.0", port=8000, log_level="info")

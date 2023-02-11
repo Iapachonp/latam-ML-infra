@@ -18,9 +18,10 @@ COPY ./entry-point.sh .
 COPY ./version.txt .
 
 FROM base AS local
+COPY /Model/Latam_flight_model.$arg_model_version.pkl /app/
 CMD ["/entry-point.sh"]
 
 FROM base AS prod-final
-COPY ./Latam_flight_model.$arg_model_version.pkl . 
+COPY ./Latam_flight_model.$arg_model_version.pkl /app 
 # micro service entry point 
 CMD ["/entry-point.sh"]

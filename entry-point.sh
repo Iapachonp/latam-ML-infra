@@ -1,14 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 getModel(){
   set -e
   model_version=`cat version.txt`
-  if [ "$env" == "local" ] ; then 
-    cp "/Model/Latam_flight_model.${model_version}.pkl" ./app/
-  else
-    cp "/Latam_flight_model.${model_version}.pkl" ./app/
-  fi
-}
+  echo "${env}"
+  }
 
 # MAIN code 
 

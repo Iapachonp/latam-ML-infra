@@ -97,6 +97,3 @@ async def create_flight(flight: Flight):
 @app.post("/predict-flight")
 async def predict_flight(flight: Flight):
     return flight.predict()
-
-
-

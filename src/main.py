@@ -16,7 +16,6 @@ from conf.config import LogConfig
 import pandas as pd
 import numpy as np
 import time
-import uvicorn
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix, classification_report
@@ -100,5 +99,4 @@ async def predict_flight(flight: Flight):
     return flight.predict()
 
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
+

@@ -4,6 +4,8 @@ metadata:
   name: latam-ml-service 
 spec:
   template:
+    metadata:
+      name: SERVICE-latam-ml-service-test-123
     spec:
       containers:
       - image: us-central1-docker.pkg.dev/aa-study/latam-repo/latam-ml-api:production

@@ -6,6 +6,11 @@ RUN mkdir -p /app/src
 COPY ./src/ /app/src/
 COPY ./requirements.txt /app
 COPY ./model-requirements.txt /app
+
+# Load test csv to emulate the input from the API given the descrepancy from the list of inputs 
+# of the document and the input vector required by the model. 
+COPY ./docs/SRE-challenge/datasets/x_test.csv /app
+
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt  
 RUN pip install --no-cache-dir --upgrade -r /app/model-requirements.txt  
 

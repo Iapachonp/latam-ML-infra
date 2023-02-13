@@ -43,7 +43,7 @@ class Flight(BaseModel):
 
     def _flight_to_df(self):
         return pd.read_csv(
-            "/docs/SRE-challenge/datasets/x_test.csv",
+            "../x_test.csv",
             nrows=1,
             skiprows=int(self.Vlo_l),
             header=None,

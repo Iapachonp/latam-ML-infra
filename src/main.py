@@ -117,4 +117,8 @@ async def check_flight(Vlo_l: str):
 
 @app.post("/predict-flight")
 async def predict_flight(flight: Flight):
-    return flight.predict() if flight.exists() else {f"Flight {flight.Vlo_l} doesn't exists"}
+    return (
+        flight.predict()
+        if flight.exists()
+        else {f"Flight {flight.Vlo_l} doesn't exists"}
+    )

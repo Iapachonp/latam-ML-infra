@@ -21,7 +21,7 @@ You can find the docs of the available api calls in the following link:
 example: gets the prediction of the flight with id Vlo_l of 76 
 
 ```bash
-curl -X 'POST' \                               ─╯
+curl -X 'POST' \
   'https://latam-ml-service-e4ixfink2a-uc.a.run.app/predict-flight' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \

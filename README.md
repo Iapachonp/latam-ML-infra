@@ -56,6 +56,24 @@ take down the service whenever you are finished:
 docker-compose down  
 ```
 
+## Local test new ML models
+
+New models can be tested by creating a new folder in the base of the repo:
+
+```bash
+mkdir ./Models
+```
+and dump the pickle file with the following name convetion:
+
+```bash
+touch Latam_flight_model.{$model_version}.pkl
+```
+where model_version should match the value of the local version file at the base of the repo:
+
+run this to check your current version:
+```bash
+echo `cat ./version.txt`
+```
 ## Gitflow strategy 
 
 the following git flow will be followed:

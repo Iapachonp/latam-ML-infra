@@ -7,10 +7,6 @@ COPY ./src/ /app/src/
 COPY ./requirements.txt /app
 COPY ./model-requirements.txt /app
 
-# Load test csv to emulate the input from the API given the descrepancy from the list of inputs 
-# of the document and the input vector required by the model. 
-COPY ./docs/SRE-challenge/datasets/x_test.csv /app
-
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt  
 RUN pip install --no-cache-dir --upgrade -r /app/model-requirements.txt  
 
@@ -23,10 +19,15 @@ COPY ./entry-point.sh .
 COPY ./version.txt .
 
 FROM base AS local
+# Load test csv to emulates the db connection to get flight info 
+RUN mkdir /app/docs 
+COPY ./docs/ /app/docs/
 COPY /Model/Latam_flight_model.$arg_model_version.pkl /app/
 CMD ["/entry-point.sh"]
 
 FROM base AS prod-final
+# Load test csv to emulates the db connection to get flight info 
+COPY ./docs/SRE-challenge/datasets/x_test.csv /app
 COPY ./Latam_flight_model.$arg_model_version.pkl /app 
 # micro service entry point 
 CMD ["/entry-point.sh"]

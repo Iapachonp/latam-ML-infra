@@ -1,4 +1,17 @@
 from pydantic import BaseModel
+import os
+
+
+class DataBaseConfig:
+    def __init__(self) -> None:
+        self.path = self._set_path(os.getenv("env"))
+
+    def _set_path(self, env):
+        return (
+            "../x_test.csv"
+            if env != "local"
+            else "../docs/SRE-challenge/datasets/x_test.csv"
+        )
 
 
 class LogConfig(BaseModel):

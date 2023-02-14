@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import Depends, FastAPI, Request, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 import types
@@ -11,6 +12,7 @@ import os
 from logging.config import dictConfig
 import logging
 from conf.config import LogConfig
+from conf.config import DataBaseConfig
 
 # model dependencies imports
 import pandas as pd
@@ -26,6 +28,9 @@ security = HTTPBasic()
 dictConfig(LogConfig().dict())
 logger = logging.getLogger("latam-ml-service")
 
+# set up data base
+db = DataBaseConfig()
+
 
 def model_deserializer(model):
     try:
@@ -37,13 +42,15 @@ def model_deserializer(model):
 
 class Flight(BaseModel):
     Vlo_l: str
-    Ori_l: str
-    Des_l: str
-    Emp_l: str
+    Fecha_l: Optional[str] = ""
+    O_vlo: Optional[str] = ""
+    O_fecha: Optional[str] = ""
+    flight_type: Optional[str] = ""
+    airline: Optional[str] = ""
 
-    def _flight_to_df(self):
+    def _get_flight_from_db(self):
         return pd.read_csv(
-            "../x_test.csv",
+            db.path,
             nrows=1,
             skiprows=int(self.Vlo_l),
             header=None,
@@ -56,12 +63,29 @@ class Flight(BaseModel):
             try:
                 return {
                     "Prediction": "Low delayed probability"
-                    if int(model.predict(self._flight_to_df())) > 0
+                    if int(model.predict(self._get_flight_from_db())) > 0
                     else "High delayed probability"
                 }
             except Exception as e:
                 logger.error(f"Invalid Prediction {e}")
                 return {"error": str(e)}
+
+    def exists(self):
+        try:
+            assert (
+                pd.read_csv(
+                    db.path,
+                    nrows=1,
+                    skiprows=int(self.Vlo_l),
+                    header=None,
+                )
+                .to_numpy()
+                .any()
+            )
+            return True
+        except Exception as e:
+            logger.error(f"Invalid Flight {e}")
+            return False
 
 
 app = FastAPI(
@@ -81,17 +105,14 @@ def read_current_user(credentials: HTTPBasicCredentials = Depends(security)):
     return {"username": credentials.username, "password": credentials.password}
 
 
-@app.post("/play-doh")
-def play_doh(figure: str):
-    return {
-        "play-doh figure": figure,
-        "build": "yes" if len(figure) > 5 else "no fucking way",
-    }
-
-
-@app.post("/flight")
-async def create_flight(flight: Flight):
-    return {"This flight departs from": flight.Ori_l, "to": flight.Des_l}
+@app.get("/check-flight")
+async def check_flight(Vlo_l: str):
+    dummy_flight = Flight(Vlo_l=Vlo_l)
+    return (
+        {f"Flight {Vlo_l} exists"}
+        if dummy_flight.exists()
+        else {f"Flight {Vlo_l} doesn't exists"}
+    )
 
 
 @app.post("/predict-flight")

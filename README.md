@@ -200,7 +200,17 @@ Allowing also new features such as:
 * Email and password based authentication 
 
 
+## CICD 
 
+CICD will be performed by github actions.
+Configuration can be found at:
+```bash
+cat .github/workflows/latam-ml-actions.yml 
+```
+Please follow this [CICD](https://github.com/Iapachonp/latam-ML-infra/actions) to check the builds. 
+
+### Graph 
+ <img src="./docs/CICD-graph.png" width=70% height=70%>
 
 
 

@@ -4,7 +4,7 @@ latam-ML-infra is a microservice that will predict the high or low probabilty of
 
 ## Architecture
 
- <img src="./docs/Architecture.png" width=50% height=50%>
+ <img src="./docs/Architecture.png" width=70% height=70%>
 
 The above architecture is being used and built for this project taking into account the following considerations:
 

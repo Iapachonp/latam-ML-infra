@@ -134,7 +134,9 @@ How to improve the response Latency and performance:
 
 * Use eventual consistency for the service, prioritizing availability of the service.
 * Check and improve queries and database connections, using a good particioning approach. 
-* Choose gcp region woth the lowest latency (network) based on the users location and add replicas. 
+* Choose gcp region with the lowest latency (network) based on the users location and add replicas. 
+* Horizontally scale the API with multiple instances and a load balacer to distribute the requests and give a faster response for the users.   
+
 
 ## SLIs & SLOs
 

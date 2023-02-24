@@ -5,7 +5,7 @@ metadata:
 spec:
   template:
     metadata:
-      name: latam-ml-service-prod-134
+      name: latam-ml-service-prodv-1-0-1 # change the name of the instace to deploy a new version of the service 
     spec:
       containers:
       - image: us-central1-docker.pkg.dev/aa-study/latam-repo/latam-ml-api:production

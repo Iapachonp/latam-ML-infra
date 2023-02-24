@@ -205,7 +205,7 @@ jobs:
           build-args: |
             arg_model_version=${{ env.ML_version }}
 
-    deploy-CR:
+  deploy-CR:
     needs: [get-ML-model, build-image-GCP]
     runs-on: ubuntu-latest
     steps:

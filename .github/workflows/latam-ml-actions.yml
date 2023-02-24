@@ -206,7 +206,7 @@ jobs:
             arg_model_version=${{ env.ML_version }}
 
     deploy-CR:
-    needs: [build-image-GCP]
+    needs: [get-ML-model, build-image-GCP]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
